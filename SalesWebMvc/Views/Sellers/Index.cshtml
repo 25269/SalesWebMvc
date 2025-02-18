@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(Model => Model.Id)
-            </th>
-            <th>
                 @Html.DisplayNameFor(Model => Model.Name)
             </th>
             <th>
@@ -39,9 +36,6 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
@@ -54,7 +48,7 @@
                     @Html.DisplayFor(modelItem => item.BaseSalary)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Department)
+                    @Html.DisplayFor(modelItem => item.DepartmentId)
                 </td>
                 <td>
                     <a asp-action="Edit" aps-route-id = "@item.Id">Edit</a>
