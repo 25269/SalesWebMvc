@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMvc.Data;
+using SalesWebMvc.Services;
 
 namespace SalesWebMvc
 {
@@ -21,6 +22,7 @@ namespace SalesWebMvc
 
             //Adicionar ao escopo do projeto o serviço de inserção dos dados ao BD
             builder.Services.AddScoped<SeedingService>();
+            builder.Services.AddScoped<SellerService>();
 
             var app = builder.Build();
 
