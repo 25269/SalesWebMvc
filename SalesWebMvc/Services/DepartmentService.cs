@@ -1,0 +1,26 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Data;
+using SalesWebMvc.Models;
+
+namespace SalesWebMvc.Services
+{
+    public class DepartmentService : Controller
+    {
+        private readonly SalesWebMvcContext _context;
+
+        public DepartmentService(SalesWebMvcContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public List<Department> FindAll()
+        {
+            return _context.Department.OrderBy(x => x.Name).ToList();
+        }
+    }
+}
