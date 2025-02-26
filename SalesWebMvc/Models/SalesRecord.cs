@@ -1,4 +1,5 @@
-﻿using SalesWebMvc.Models.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using SalesWebMvc.Models.Enums;
 
 namespace SalesWebMvc.Models
 {
@@ -6,6 +7,8 @@ namespace SalesWebMvc.Models
     {
         public int Id { get; set; }
         public DateOnly Date {  get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Amount { get; set; }
         public SalesStatus Status { get; set; }
         public Seller Seller { get; set; }
