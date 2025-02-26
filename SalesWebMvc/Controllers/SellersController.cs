@@ -49,9 +49,9 @@ namespace SalesWebMvc.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not provided!"});
+                return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
             var obj = await _sellerService.FindByIdAsync(id.Value);
@@ -67,21 +67,28 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _sellerService.RemoveAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _sellerService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException iex)
+            {
+                return RedirectToAction(nameof(Error), new {message  = iex.Message});
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not provided!"});
+                return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not found!"});
+                return RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
 
             return View(obj);
@@ -91,17 +98,17 @@ namespace SalesWebMvc.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not provided!"});
+                return RedirectToAction(nameof(Error), new { message = "Id not provided!" });
             }
 
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not found!"});
+                return RedirectToAction(nameof(Error), new { message = "Id not found!" });
             }
 
             List<Department> departments = await _departmentService.FindAllAsync();
-            SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments};
+            SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };
             return View(viewModel);
         }
 
@@ -112,13 +119,13 @@ namespace SalesWebMvc.Controllers
             if (ModelState.IsValid)
             {
                 var departaments = await _departmentService.FindAllAsync();
-                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departaments};
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departaments };
                 return View(viewModel);
             }
 
             if (id != seller.Id)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id mismatch!"});
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch!" });
             }
 
             try
@@ -126,13 +133,13 @@ namespace SalesWebMvc.Controllers
                 await _sellerService.UpdateAsync(seller);
                 return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException nex) 
+            catch (NotFoundException nex)
             {
-                return RedirectToAction(nameof(Error), new { message = nex.Message});
+                return RedirectToAction(nameof(Error), new { message = nex.Message });
             }
-            catch (DbConcurrencyException dbex) 
-            { 
-                return RedirectToAction(nameof(Error), new { message = dbex.Message});
+            catch (DbConcurrencyException dbex)
+            {
+                return RedirectToAction(nameof(Error), new { message = dbex.Message });
             }
         }
 
