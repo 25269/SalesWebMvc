@@ -11,6 +11,7 @@ namespace SalesWebMvc
         public static void Main(string[] args)
         {            
             var builder = WebApplication.CreateBuilder(args);
+            //Código refatorado abaixo
             /*builder.Services.AddDbContext<SalesWebMvcContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SalesWebMvcContext") ?? throw new InvalidOperationException("Connection string 'SalesWebMvcContext' not found.")));*/
 
@@ -24,10 +25,11 @@ namespace SalesWebMvc
             builder.Services.AddScoped<SeedingService>();
             builder.Services.AddScoped<SellerService>();
             builder.Services.AddScoped<DepartmentService>();
+            builder.Services.AddScoped<SalesRecordService>();
 
             var app = builder.Build();
 
-            //Trecho de código original, comentado para não afetar no funcionamento
+            //Trecho de código original, comentado para não afetar no funcionamento (visto que implementei logo abaixo)
             /* Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
